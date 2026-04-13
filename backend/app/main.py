@@ -29,10 +29,8 @@ KB_STORE_FILE = DATA_DIR / "knowledge_base.json"
 settings = get_settings()
 
 llm = LLMClient(
-    provider=settings.get_llm_provider(),
-    model=settings.get_llm_model(),
-    api_key=settings.get_llm_api_key(),
-    base_url=settings.get_llm_base_url(),
+    model=settings.gemini_model,
+    api_key=settings.gemini_api_key,
 )
 memory = SessionMemory(max_turns=settings.max_turns_memory)
 kb = InMemoryKnowledgeBase()

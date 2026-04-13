@@ -22,25 +22,15 @@ pip install -r requirements.txt
 copy .env.example .env
 ```
 
-Neu dung OpenAI, sua `.env`:
+Sua `.env` de dung Gemini:
 
 ```env
-LLM_PROVIDER=openai
-OPENAI_API_KEY=your_key
-OPENAI_MODEL=gpt-4o-mini
-```
-
-Neu dung Gemini, sua `.env`:
-
-```env
-LLM_PROVIDER=gemini
 GEMINI_API_KEY=your_gemini_key
 GEMINI_MODEL=gemini-2.5-flash
 ```
 
 Ghi chu:
-- Ban co the dung bien tong quat `LLM_API_KEY`, `LLM_MODEL`, `LLM_BASE_URL` neu muon override truc tiep.
-- Mac dinh khi `LLM_PROVIDER=gemini`, he thong dung OpenAI-compatible endpoint cua Google: `https://generativelanguage.googleapis.com/v1beta/openai/`.
+- He thong chi dung Gemini, khong con phan cau hinh OpenAI/provider.
 - Neu khong co key, he thong van chay fallback mode de demo workflow.
 
 ## 3) Chay server
