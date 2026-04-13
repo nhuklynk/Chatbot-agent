@@ -28,6 +28,21 @@ function appendMessage(role, text) {
   persistChatHistory();
 }
 
+function showTypingIndicator() {
+  if (!chatBox) return null;
+  const indicator = document.createElement("div");
+  indicator.className = "msg bot typing-indicator";
+  indicator.innerHTML = "<span></span><span></span><span></span>";
+  chatBox.appendChild(indicator);
+  chatBox.scrollTop = chatBox.scrollHeight;
+  return indicator;
+}
+
+function removeTypingIndicator(indicator) {
+  if (!indicator || !indicator.parentNode) return;
+  indicator.parentNode.removeChild(indicator);
+}
+
 function getMessageItems() {
   if (!chatBox) return [];
   const nodes = Array.from(chatBox.querySelectorAll(".msg"));
@@ -266,6 +281,7 @@ async function sendMessage() {
   chatInput.value = "";
   sendBtn.disabled = true;
   sendBtn.innerHTML = '<span class="material-symbols-outlined" style="font-variation-settings: \'FILL\' 1;">hourglass_top</span>';
+  const typingIndicator = showTypingIndicator();
 
   try {
     const response = await fetch("/chat", {
@@ -277,8 +293,10 @@ async function sendMessage() {
       }),
     });
     const data = await parseResponse(response);
+    removeTypingIndicator(typingIndicator);
     appendMessage("assistant", data.answer);
   } catch (error) {
+    removeTypingIndicator(typingIndicator);
     appendMessage("assistant", `Lỗi: ${error.message}`);
   } finally {
     sendBtn.disabled = false;
