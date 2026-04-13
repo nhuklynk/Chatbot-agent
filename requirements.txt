@@ -1,0 +1,11 @@
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+pydantic-settings>=2.4.0
+openai>=1.40.0
+requests>=2.32.0
+beautifulsoup4>=4.12.0
+scikit-learn>=1.5.0
+numpy>=2.0.0
+python-dotenv>=1.0.1
+python-multipart>=0.0.20
+kreuzberg>=4.8.2

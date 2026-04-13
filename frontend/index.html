@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chatbot AI Agent UI</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Chatbot AI Agent</h1>
+      <p class="subtitle">Giao dien gom 2 khu: Upload du lieu va Chat.</p>
+
+      <section class="card">
+        <h2>1) Upload du lieu</h2>
+        <div class="upload-grid">
+          <div class="block">
+            <h3>Upload file</h3>
+            <input id="fileInput" type="file" />
+            <button id="uploadFileBtn">Upload file</button>
+          </div>
+
+          <div class="block">
+            <h3>Ingest URL</h3>
+            <input id="urlInput" type="text" placeholder="https://..." />
+            <button id="ingestUrlBtn">Ingest URL</button>
+          </div>
+
+          <div class="block full">
+            <h3>Ingest text</h3>
+            <input id="sourceInput" type="text" placeholder="Nguon du lieu (vi du: tai-lieu-nhom-1)" />
+            <textarea id="textInput" rows="5" placeholder="Dan noi dung text vao day..."></textarea>
+            <button id="ingestTextBtn">Ingest text</button>
+          </div>
+        </div>
+        <pre id="uploadStatus" class="status"></pre>
+      </section>
+
+      <section class="card">
+        <h2>2) Chat voi Agent</h2>
+        <div class="chat-controls">
+          <input id="sessionInput" type="text" value="team-a" />
+        </div>
+        <div id="chatBox" class="chat-box"></div>
+        <div class="chat-input-row">
+          <textarea id="chatInput" rows="3" placeholder="Nhap cau hoi..."></textarea>
+          <button id="sendBtn">Gui</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
