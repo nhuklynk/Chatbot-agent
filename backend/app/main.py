@@ -31,6 +31,7 @@ settings = get_settings()
 llm = LLMClient(
     model=settings.gemini_model,
     api_key=settings.gemini_api_key,
+    fallback_model=settings.gemini_fallback_model,
 )
 memory = SessionMemory(max_turns=settings.max_turns_memory)
 kb = InMemoryKnowledgeBase()
@@ -78,7 +79,7 @@ def health() -> dict[str, str]:
 
 @app.get("/")
 def index() -> FileResponse:
-    return FileResponse(FRONTEND_KNOWLEDGE_ENTRY)
+    return FileResponse(FRONTEND_CHAT_ENTRY)
 
 
 @app.get("/chat")
