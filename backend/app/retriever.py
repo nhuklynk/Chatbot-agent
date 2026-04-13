@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+import re
+import unicodedata
 
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -16,8 +18,20 @@ class InMemoryKnowledgeBase:
     def __init__(self):
         self.docs: list[str] = []
         self.sources: list[str] = []
-        self._vectorizer = TfidfVectorizer(stop_words=None)
+        self._vectorizer = TfidfVectorizer(
+            stop_words=None,
+            preprocessor=self._normalize_for_search,
+            ngram_range=(1, 2),
+        )
         self._matrix = None
+
+    @staticmethod
+    def _normalize_for_search(text: str) -> str:
+        lowered = (text or "").lower()
+        decomposed = unicodedata.normalize("NFKD", lowered)
+        without_accents = "".join(ch for ch in decomposed if not unicodedata.combining(ch))
+        normalized = re.sub(r"[^a-z0-9\s]", " ", without_accents)
+        return re.sub(r"\s+", " ", normalized).strip()
 
     def add_chunks(self, chunks: list[str], source: str) -> None:
         for chunk in chunks:

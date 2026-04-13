@@ -60,6 +60,17 @@ class ChatbotAgent:
     def ask(self, session_id: str, user_message: str) -> AgentResult:
         self.memory.add_user_message(session_id, user_message)
         retrieved = self.kb.search(user_message, top_k=3)
+        min_confidence = 0.08
+        top_score = retrieved[0].score if retrieved else 0.0
+
+        if self.kb.docs and (not retrieved or top_score < min_confidence):
+            answer = (
+                "Mình chưa tìm thấy thông tin đủ khớp trong kho tri thức đã nạp. "
+                "Bạn thử nêu rõ hơn tên tài liệu, mã môn hoặc từ khóa cụ thể nhé."
+            )
+            self.memory.add_assistant_message(session_id, answer)
+            return AgentResult(answer=answer, source="knowledge_base")
+
         chunks = [item.text for item in retrieved]
         source = "knowledge_base" if retrieved else "general"
 
