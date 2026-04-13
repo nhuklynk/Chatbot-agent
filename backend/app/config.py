@@ -6,8 +6,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     gemini_api_key: str = ""
-    gemini_model: str = "gemini-1.5-flash"
-    gemini_fallback_model: str = "gemini-1.5-flash-8b"
+    gemini_model: str = "gemini-2.5-flash"
+    gemini_fallback_model: str = "gemini-2.5-flash-lite"
     system_prompt_path: str = "prompts/system_prompt.md"
     max_turns_memory: int = 6
 
