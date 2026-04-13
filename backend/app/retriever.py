@@ -23,8 +23,30 @@ class InMemoryKnowledgeBase:
         for chunk in chunks:
             self.docs.append(chunk)
             self.sources.append(source)
+        self._rebuild_matrix()
+
+    def _rebuild_matrix(self) -> None:
         if self.docs:
             self._matrix = self._vectorizer.fit_transform(self.docs)
+        else:
+            self._matrix = None
+
+    def remove_source(self, source: str) -> int:
+        kept_docs: list[str] = []
+        kept_sources: list[str] = []
+        removed_count = 0
+
+        for doc, src in zip(self.docs, self.sources):
+            if src == source:
+                removed_count += 1
+                continue
+            kept_docs.append(doc)
+            kept_sources.append(src)
+
+        self.docs = kept_docs
+        self.sources = kept_sources
+        self._rebuild_matrix()
+        return removed_count
 
     def search(self, query: str, top_k: int = 3) -> list[RetrievedChunk]:
         if not self.docs or self._matrix is None:

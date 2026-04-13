@@ -27,8 +27,8 @@ class Settings(BaseSettings):
         prompt_file = project_root / self.system_prompt_path
         if not prompt_file.exists():
             return (
-                "Ban la tro ly AI tieng Viet. "
-                "Tra loi ro rang, dung trong tam, va neu khong chac chan thi noi ro."
+                "Bạn là trợ lý AI tiếng Việt. "
+                "Trả lời rõ ràng, đúng trọng tâm, và nếu không chắc chắn thì nói rõ."
             )
         return prompt_file.read_text(encoding="utf-8").strip()
 

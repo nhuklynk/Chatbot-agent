@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Hội thoại</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased overflow-hidden">
+    <header class="fixed top-0 w-full flex justify-between items-center px-6 h-16 bg-white/90 backdrop-blur z-50 shadow-sm font-manrope">
+      <div class="text-xl font-bold">Kiến trúc AI</div>
+      <a class="text-sm text-blue-700 font-semibold" href="/">Đi đến Kho tri thức</a>
+    </header>
+
+    <aside class="fixed left-0 top-16 bottom-0 flex flex-col p-4 w-64 bg-slate-100 text-sm font-medium z-40">
+      <div class="flex items-center gap-3 mb-8 px-2">
+        <div class="w-10 h-10 rounded-xl bg-blue-700 flex items-center justify-center text-white">
+          <span class="material-symbols-outlined">architecture</span>
+        </div>
+        <div>
+          <div class="font-manrope font-bold leading-tight">Dự án Alpha</div>
+          <div class="text-[10px] text-slate-500 font-normal">Phiên bản 2.4</div>
+        </div>
+      </div>
+      <div class="space-y-1 mb-8">
+        <a class="flex items-center gap-3 px-3 py-2.5 bg-white text-blue-600 shadow-sm rounded-lg" href="/chat">
+          <span class="material-symbols-outlined">chat_bubble</span><span>Hội thoại</span>
+        </a>
+        <a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:bg-slate-200/50 rounded-lg" href="/">
+          <span class="material-symbols-outlined">database</span><span>Kho tri thức</span>
+        </a>
+      </div>
+    </aside>
+
+    <main class="ml-64 mt-16 h-[calc(100vh-64px)] p-6">
+      <section class="h-full bg-white rounded-xl shadow-sm relative flex flex-col overflow-hidden">
+        <header class="h-14 px-6 flex items-center justify-between bg-white/80 backdrop-blur z-10 shrink-0 border-b border-slate-200">
+          <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+              <span class="text-xs font-semibold text-slate-500 uppercase tracking-widest">Phiên đang hoạt động</span>
+            </div>
+            <div class="h-4 w-[1px] bg-slate-300"></div>
+            <input id="sessionInput" class="px-2 py-1 bg-slate-100 rounded text-[11px] font-mono text-slate-600 w-44" value="team-a" />
+          </div>
+          <button id="clearChatBtn" class="flex items-center gap-2 text-red-700 text-xs font-bold hover:bg-red-50 px-3 py-1.5 rounded-lg transition-colors">
+            <span class="material-symbols-outlined text-sm">delete_sweep</span> Xóa chat
+          </button>
+        </header>
+        <div id="chatBox" class="flex-1 overflow-y-auto p-6 space-y-8 pb-32"></div>
+        <div class="absolute bottom-0 w-full p-6 bg-gradient-to-t from-white via-white/95 to-transparent">
+          <div class="max-w-4xl mx-auto relative flex items-end gap-3 bg-slate-50 p-3 rounded-2xl shadow ring-1 ring-slate-200">
+            <textarea id="chatInput" class="flex-1 bg-transparent border-none focus:ring-0 text-sm py-2 px-1 max-h-32 resize-none" placeholder="Nhập câu hỏi của bạn..." rows="1"></textarea>
+            <button id="sendBtn" class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-700 to-blue-500 text-white flex items-center justify-center shadow-md">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="/static/app.js"></script>
+  </body>
+</html>

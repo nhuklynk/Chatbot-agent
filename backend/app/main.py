@@ -1,4 +1,5 @@
 from pathlib import Path
+from collections import Counter
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import FileResponse
@@ -13,9 +14,12 @@ from .retriever import InMemoryKnowledgeBase
 from .schemas import (
     ChatRequest,
     ChatResponse,
+    DeleteKnowledgeSourceResponse,
     IngestTextRequest,
     IngestUrlRequest,
     IngestUrlResponse,
+    KnowledgeSourceItem,
+    KnowledgeSourcesResponse,
 )
 from .workflow import ChatbotAgent
 
@@ -61,10 +65,12 @@ _load_kb_from_disk()
 app = FastAPI(
     title="Chatbot AI Agent",
     version="1.0.0",
-    description="Agent co memory + ingest tai lieu tu URL + workflow ro rang",
+    description="AI Agent có bộ nhớ + nạp tài liệu từ URL + workflow rõ ràng",
 )
 FRONTEND_DIR = PROJECT_ROOT / "frontend"
 app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
+FRONTEND_KNOWLEDGE_ENTRY = FRONTEND_DIR / "knowledge.html"
+FRONTEND_CHAT_ENTRY = FRONTEND_DIR / "chat.html"
 
 
 @app.get("/health")
@@ -74,7 +80,54 @@ def health() -> dict[str, str]:
 
 @app.get("/")
 def index() -> FileResponse:
-    return FileResponse(FRONTEND_DIR / "index.html")
+    return FileResponse(FRONTEND_KNOWLEDGE_ENTRY)
+
+
+@app.get("/chat")
+def chat_page() -> FileResponse:
+    return FileResponse(FRONTEND_CHAT_ENTRY)
+
+
+@app.get("/knowledge-sources", response_model=KnowledgeSourcesResponse)
+def knowledge_sources() -> KnowledgeSourcesResponse:
+    source_counts = Counter(kb.sources)
+    items: list[KnowledgeSourceItem] = []
+
+    for source, chunk_count in source_counts.items():
+        if source.startswith("file:"):
+            source_type = "file"
+            display_name = source.removeprefix("file:")
+        elif source.startswith("http://") or source.startswith("https://"):
+            source_type = "url"
+            display_name = source
+        else:
+            source_type = "text"
+            display_name = source
+
+        items.append(
+            KnowledgeSourceItem(
+                source=source,
+                display_name=display_name,
+                source_type=source_type,
+                chunk_count=chunk_count,
+            )
+        )
+
+    items.sort(key=lambda item: item.chunk_count, reverse=True)
+    return KnowledgeSourcesResponse(items=items)
+
+
+@app.delete("/knowledge-sources", response_model=DeleteKnowledgeSourceResponse)
+def delete_knowledge_source(source: str) -> DeleteKnowledgeSourceResponse:
+    removed_count = kb.remove_source(source)
+    if removed_count == 0:
+        raise HTTPException(status_code=404, detail="Không tìm thấy nguồn dữ liệu để xóa")
+
+    _save_kb_to_disk()
+    return DeleteKnowledgeSourceResponse(
+        message="Xóa nguồn dữ liệu thành công",
+        removed_chunks=removed_count,
+    )
 
 
 @app.post("/ingest-url", response_model=IngestUrlResponse)
@@ -83,11 +136,11 @@ def ingest_url(payload: IngestUrlRequest) -> IngestUrlResponse:
         count = agent.ingest_url(payload.url)
         _save_kb_to_disk()
         return IngestUrlResponse(
-            message="Nap tai lieu thanh cong",
+            message="Nạp tài liệu thành công",
             chunk_count=count,
         )
     except Exception as exc:
-        raise HTTPException(status_code=400, detail=f"Khong nap duoc URL: {exc}") from exc
+        raise HTTPException(status_code=400, detail=f"Không nạp được URL: {exc}") from exc
 
 
 @app.post("/ingest-text", response_model=IngestUrlResponse)
@@ -95,10 +148,10 @@ def ingest_text(payload: IngestTextRequest) -> IngestUrlResponse:
     normalized_text = normalizer.normalize_text(payload.text)
     count = agent.ingest_text(text=normalized_text, source=payload.source)
     if count == 0:
-        raise HTTPException(status_code=400, detail="Noi dung text rong hoac khong trich xuat duoc")
+        raise HTTPException(status_code=400, detail="Nội dung văn bản rỗng hoặc không trích xuất được")
     _save_kb_to_disk()
     return IngestUrlResponse(
-        message="Nap text thanh cong",
+        message="Nạp văn bản thành công",
         chunk_count=count,
     )
 
@@ -111,7 +164,7 @@ async def ingest_file(file: UploadFile = File(...)) -> IngestUrlResponse:
     if suffix not in allowed:
         raise HTTPException(
             status_code=400,
-            detail="Chi ho tro .txt, .md, .csv, .json, .pdf, .doc, .docx, .xls, .xlsx",
+            detail="Chỉ hỗ trợ .txt, .md, .csv, .json, .pdf, .doc, .docx, .xls, .xlsx",
         )
 
     raw = await file.read()
@@ -120,16 +173,16 @@ async def ingest_file(file: UploadFile = File(...)) -> IngestUrlResponse:
     except Exception as exc:
         raise HTTPException(
             status_code=400,
-            detail=f"Khong the trich xuat noi dung file. Kiem tra file hoac cai them dependency he thong (vd: pandoc cho doc/docx): {exc}",
+            detail=f"Không thể trích xuất nội dung tệp. Kiểm tra tệp hoặc cài thêm dependency hệ thống (ví dụ: pandoc cho doc/docx): {exc}",
         ) from exc
 
     count = agent.ingest_text(text=text, source=f"file:{filename}")
     if count == 0:
-        raise HTTPException(status_code=400, detail="File khong co noi dung hop le")
+        raise HTTPException(status_code=400, detail="Tệp không có nội dung hợp lệ")
     _save_kb_to_disk()
 
     return IngestUrlResponse(
-        message=f"Nap file {filename} thanh cong",
+        message=f"Nạp tệp {filename} thành công",
         chunk_count=count,
     )
 
@@ -144,4 +197,4 @@ def chat(payload: ChatRequest) -> ChatResponse:
             source=result.source,
         )
     except Exception as exc:
-        raise HTTPException(status_code=500, detail=f"Loi khi chat: {exc}") from exc
+        raise HTTPException(status_code=500, detail=f"Lỗi khi chat: {exc}") from exc

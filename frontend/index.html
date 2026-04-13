@@ -1,54 +1,1088 @@
 <!DOCTYPE html>
-<html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chatbot AI Agent UI</title>
-    <link rel="stylesheet" href="/static/style.css" />
-  </head>
-  <body>
-    <main class="container">
-      <h1>Chatbot AI Agent</h1>
-      <p class="subtitle">Giao dien gom 2 khu: Upload du lieu va Chat.</p>
+<html class="light" lang="vi">
 
-      <section class="card">
-        <h2>1) Upload du lieu</h2>
-        <div class="upload-grid">
-          <div class="block">
-            <h3>Upload file</h3>
-            <input id="fileInput" type="file" />
-            <button id="uploadFileBtn">Upload file</button>
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Kiến trúc AI | Bảng điều khiển</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "inverse-on-surface": "#eff1f3",
+            "on-primary": "#ffffff",
+            "surface-container-high": "#e6e8ea",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#00174b",
+            "on-primary-container": "#eeefff",
+            "outline": "#737686",
+            "on-background": "#191c1e",
+            "on-tertiary-container": "#ffede6",
+            "secondary": "#495c95",
+            "surface-dim": "#d8dadc",
+            "surface-tint": "#0053db",
+            "on-secondary-fixed-variant": "#31447b",
+            "on-tertiary": "#ffffff",
+            "tertiary": "#943700",
+            "on-surface": "#191c1e",
+            "tertiary-container": "#bc4800",
+            "on-secondary-container": "#394c84",
+            "on-secondary-fixed": "#00174b",
+            "secondary-fixed-dim": "#b4c5ff",
+            "outline-variant": "#c3c6d7",
+            "background": "#f7f9fb",
+            "inverse-primary": "#b4c5ff",
+            "surface-container": "#eceef0",
+            "surface-variant": "#e0e3e5",
+            "on-secondary": "#ffffff",
+            "on-error-container": "#93000a",
+            "surface": "#f7f9fb",
+            "on-tertiary-fixed": "#360f00",
+            "surface-container-highest": "#e0e3e5",
+            "surface-container-low": "#f2f4f6",
+            "primary-fixed": "#dbe1ff",
+            "tertiary-fixed": "#ffdbcd",
+            "on-primary-fixed-variant": "#003ea8",
+            "tertiary-fixed-dim": "#ffb596",
+            "error-container": "#ffdad6",
+            "on-tertiary-fixed-variant": "#7d2d00",
+            "on-error": "#ffffff",
+            "primary-fixed-dim": "#b4c5ff",
+            "surface-bright": "#f7f9fb",
+            "secondary-fixed": "#dbe1ff",
+            "error": "#ba1a1a",
+            "secondary-container": "#acbfff",
+            "primary": "#004ac6",
+            "on-surface-variant": "#434655",
+            "inverse-surface": "#2d3133",
+            "primary-container": "#2563eb"
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+
+<body class="bg-background text-on-surface antialiased overflow-hidden">
+  <header
+    class="fixed top-0 w-full flex justify-between items-center px-6 h-16 bg-white/80 backdrop-blur-xl z-50 shadow-sm font-manrope tracking-tight">
+    <div class="flex items-center gap-8">
+      <div class="text-xl font-bold tracking-tighter text-slate-900">Kiến trúc AI</div>
+      <nav class="hidden md:flex gap-6 items-center h-full">
+        <a class="text-slate-500 hover:text-slate-900 transition-colors h-full flex items-center" href="#">Bảng điều
+          khiển</a>
+        <a class="text-blue-600 border-b-2 border-blue-600 pb-1 h-full flex items-center mt-1" href="#">Kho tri thức</a>
+        <a class="text-slate-500 hover:text-slate-900 transition-colors h-full flex items-center" href="#">Tác nhân</a>
+        <a class="text-slate-500 hover:text-slate-900 transition-colors h-full flex items-center" href="#">Nhật ký</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="material-symbols-outlined text-slate-400">settings</span>
+    </div>
+  </header>
+
+  <aside class="fixed left-0 top-16 bottom-0 flex flex-col p-4 w-64 bg-slate-100 font-inter text-sm font-medium z-40">
+    <div class="flex items-center gap-3 mb-8 px-2">
+      <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white">
+        <span class="material-symbols-outlined">architecture</span>
+      </div>
+      <div>
+        <div class="font-manrope font-bold text-slate-900 leading-tight">Dự án Alpha</div>
+        <div class="text-[10px] text-slate-500 font-normal">Phiên bản 2.4</div>
+      </div>
+    </div>
+    <div class="space-y-1 mb-8">
+      <a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:bg-slate-200/50 rounded-lg" href="#">
+        <span class="material-symbols-outlined">chat_bubble</span>
+        <span>Hội thoại</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 bg-white text-blue-600 shadow-sm rounded-lg" href="#">
+        <span class="material-symbols-outlined">database</span>
+        <span>Kho tri thức</span>
+      </a>
+    </div>
+    <button
+      class="w-full bg-gradient-to-br from-primary to-primary-container text-white py-3 rounded-xl font-manrope font-bold text-sm shadow-md mb-auto">
+      Triển khai tác nhân
+    </button>
+  </aside>
+
+  <main class="ml-64 mt-16 h-[calc(100vh-64px)] grid grid-cols-12 overflow-hidden">
+    <section class="col-span-12 lg:col-span-5 bg-surface-container-low p-6 overflow-y-auto space-y-6">
+      <header>
+        <h2 class="text-2xl font-manrope font-extrabold text-on-surface tracking-tight">Kho tri thức</h2>
+        <p class="text-sm text-on-surface-variant">Tải lên và quản lý nguồn dữ liệu của bạn.</p>
+      </header>
+
+      <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined">upload_file</span>
           </div>
+          <h3 class="font-manrope font-bold text-on-surface">Tải tài liệu</h3>
+        </div>
+        <div
+          class="border-2 border-dashed border-outline-variant/30 rounded-xl p-8 flex flex-col items-center justify-center bg-surface-container-low hover:bg-primary-fixed transition-colors">
+          <span class="material-symbols-outlined text-outline text-4xl mb-3">cloud_upload</span>
+          <p class="text-sm font-medium text-on-surface mb-2">Bấm tải lên để chọn tệp</p>
+          <input id="fileInput" type="file" class="hidden" />
+          <button id="uploadFileBtn"
+            class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 active:scale-95 transition-all">
+            Tải tệp lên
+          </button>
+          <p id="selectedFileName" class="selected-file-name mt-3">Chưa chọn tệp nào</p>
+          <p class="text-xs text-on-surface-variant mt-1">PDF, TXT, CSV, JSON, DOCX, XLSX (tối đa 50MB)</p>
+        </div>
+      </div>
 
-          <div class="block">
-            <h3>Ingest URL</h3>
-            <input id="urlInput" type="text" placeholder="https://..." />
-            <button id="ingestUrlBtn">Ingest URL</button>
+      <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-secondary">
+            <span class="material-symbols-outlined">link</span>
           </div>
+          <h3 class="font-manrope font-bold text-on-surface">Nạp URL</h3>
+        </div>
+        <div class="flex gap-2">
+          <input id="urlInput"
+            class="flex-1 bg-surface-container-low border-none rounded-lg px-4 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all"
+            placeholder="https://example.com/docs" type="text" />
+          <button id="ingestUrlBtn"
+            class="bg-secondary-container text-on-secondary-container px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 active:scale-95 transition-all">
+            Nạp
+          </button>
+        </div>
+      </div>
 
-          <div class="block full">
-            <h3>Ingest text</h3>
-            <input id="sourceInput" type="text" placeholder="Nguon du lieu (vi du: tai-lieu-nhom-1)" />
-            <textarea id="textInput" rows="5" placeholder="Dan noi dung text vao day..."></textarea>
-            <button id="ingestTextBtn">Ingest text</button>
+      <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-tertiary">
+            <span class="material-symbols-outlined">edit_note</span>
+          </div>
+          <h3 class="font-manrope font-bold text-on-surface">Nhập ngữ cảnh thủ công</h3>
+        </div>
+        <div class="space-y-3">
+          <input id="sourceInput"
+            class="w-full bg-surface-container-low border-none rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all"
+            placeholder="Tên nguồn dữ liệu" type="text" />
+          <textarea id="textInput"
+            class="w-full bg-surface-container-low border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all resize-none"
+            placeholder="Dán nội dung văn bản vào đây..." rows="4"></textarea>
+        </div>
+        <button id="ingestTextBtn"
+          class="w-full bg-primary text-white py-2.5 rounded-lg text-sm font-bold shadow-sm hover:opacity-90 active:scale-[0.98] transition-all">
+          Lưu đoạn văn bản
+        </button>
+        <pre id="uploadStatus" class="upload-status"></pre>
+      </div>
+    </section>
+
+    <section class="col-span-12 lg:col-span-7 bg-surface relative flex flex-col overflow-hidden">
+      <header class="h-14 px-6 flex items-center justify-between bg-white/40 backdrop-blur-md z-10 shrink-0">
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+            <span class="text-xs font-semibold text-on-surface-variant uppercase tracking-widest">Phiên đang hoạt
+              động</span>
+          </div>
+          <div class="h-4 w-[1px] bg-outline-variant"></div>
+          <input id="sessionInput"
+            class="flex items-center gap-1.5 px-2 py-1 bg-surface-container-high rounded text-[11px] font-mono text-on-surface-variant w-44"
+            value="team-a" />
+        </div>
+        <button id="clearChatBtn"
+          class="flex items-center gap-2 text-error text-xs font-bold hover:bg-error-container/20 px-3 py-1.5 rounded-lg transition-colors">
+          <span class="material-symbols-outlined text-sm">delete_sweep</span>
+          Xóa chat
+        </button>
+      </header>
+      <div id="chatBox" class="flex-1 overflow-y-auto p-6 space-y-8 pb-32"></div>
+      <div class="absolute bottom-0 w-full p-6 bg-gradient-to-t from-surface via-surface/95 to-transparent">
+        <div
+          class="max-w-4xl mx-auto relative flex items-end gap-3 bg-surface-container-lowest p-3 rounded-2xl shadow-xl shadow-blue-600/5 ring-1 ring-outline-variant/10">
+          <textarea id="chatInput"
+            class="flex-1 bg-transparent border-none focus:ring-0 text-sm py-2 px-1 max-h-32 resize-none"
+            placeholder="Nhập câu hỏi của bạn..." rows="1"></textarea>
+          <button id="sendBtn"
+            class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-container text-white flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+
+</html>
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Architect AI | Dashboard</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "inverse-on-surface": "#eff1f3",
+            "on-primary": "#ffffff",
+            "surface-container-high": "#e6e8ea",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#00174b",
+            "on-primary-container": "#eeefff",
+            "outline": "#737686",
+            "on-background": "#191c1e",
+            "on-tertiary-container": "#ffede6",
+            "secondary": "#495c95",
+            "surface-dim": "#d8dadc",
+            "surface-tint": "#0053db",
+            "on-secondary-fixed-variant": "#31447b",
+            "on-tertiary": "#ffffff",
+            "tertiary": "#943700",
+            "on-surface": "#191c1e",
+            "tertiary-container": "#bc4800",
+            "on-secondary-container": "#394c84",
+            "on-secondary-fixed": "#00174b",
+            "secondary-fixed-dim": "#b4c5ff",
+            "outline-variant": "#c3c6d7",
+            "background": "#f7f9fb",
+            "inverse-primary": "#b4c5ff",
+            "surface-container": "#eceef0",
+            "surface-variant": "#e0e3e5",
+            "on-secondary": "#ffffff",
+            "on-error-container": "#93000a",
+            "surface": "#f7f9fb",
+            "on-tertiary-fixed": "#360f00",
+            "surface-container-highest": "#e0e3e5",
+            "surface-container-low": "#f2f4f6",
+            "primary-fixed": "#dbe1ff",
+            "tertiary-fixed": "#ffdbcd",
+            "on-primary-fixed-variant": "#003ea8",
+            "tertiary-fixed-dim": "#ffb596",
+            "error-container": "#ffdad6",
+            "on-tertiary-fixed-variant": "#7d2d00",
+            "on-error": "#ffffff",
+            "primary-fixed-dim": "#b4c5ff",
+            "surface-bright": "#f7f9fb",
+            "secondary-fixed": "#dbe1ff",
+            "error": "#ba1a1a",
+            "secondary-container": "#acbfff",
+            "primary": "#004ac6",
+            "on-surface-variant": "#434655",
+            "inverse-surface": "#2d3133",
+            "primary-container": "#2563eb"
+          },
+          fontFamily: {
+            "headline": ["Manrope"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+
+<body class="bg-background text-on-surface antialiased overflow-hidden">
+  <header
+    class="fixed top-0 w-full flex justify-between items-center px-6 h-16 bg-white/80 backdrop-blur-xl z-50 shadow-sm font-manrope tracking-tight">
+    <div class="flex items-center gap-8">
+      <div class="text-xl font-bold tracking-tighter text-slate-900">Architect AI</div>
+      <nav class="hidden md:flex gap-6 items-center h-full">
+        <a class="text-slate-500 hover:text-slate-900 transition-colors h-full flex items-center" href="#">Dashboard</a>
+        <a class="text-blue-600 border-b-2 border-blue-600 pb-1 h-full flex items-center mt-1" href="#">Knowledge
+          Base</a>
+        <a class="text-slate-500 hover:text-slate-900 transition-colors h-full flex items-center" href="#">Agents</a>
+        <a class="text-slate-500 hover:text-slate-900 transition-colors h-full flex items-center" href="#">Logs</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="material-symbols-outlined text-slate-400">settings</span>
+    </div>
+  </header>
+
+  <aside class="fixed left-0 top-16 bottom-0 flex flex-col p-4 w-64 bg-slate-100 font-inter text-sm font-medium z-40">
+    <div class="flex items-center gap-3 mb-8 px-2">
+      <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white">
+        <span class="material-symbols-outlined">architecture</span>
+      </div>
+      <div>
+        <div class="font-manrope font-bold text-slate-900 leading-tight">Project Alpha</div>
+        <div class="text-[10px] text-slate-500 font-normal">V2.4 Stable</div>
+      </div>
+    </div>
+    <div class="space-y-1 mb-8">
+      <a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:bg-slate-200/50 rounded-lg" href="#">
+        <span class="material-symbols-outlined">chat_bubble</span>
+        <span>Conversations</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 bg-white text-blue-600 shadow-sm rounded-lg" href="#">
+        <span class="material-symbols-outlined">database</span>
+        <span>Knowledge Base</span>
+      </a>
+    </div>
+    <button
+      class="w-full bg-gradient-to-br from-primary to-primary-container text-white py-3 rounded-xl font-manrope font-bold text-sm shadow-md mb-auto">
+      Deploy Agent
+    </button>
+  </aside>
+
+  <main class="ml-64 mt-16 h-[calc(100vh-64px)] grid grid-cols-12 overflow-hidden">
+    <section class="col-span-12 lg:col-span-5 bg-surface-container-low p-6 overflow-y-auto space-y-6">
+      <header>
+        <h2 class="text-2xl font-manrope font-extrabold text-on-surface tracking-tight">Knowledge Base</h2>
+        <p class="text-sm text-on-surface-variant">Upload and manage your data sources.</p>
+      </header>
+
+      <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined">upload_file</span>
+          </div>
+          <h3 class="font-manrope font-bold text-on-surface">Upload Knowledge</h3>
+        </div>
+        <div
+          class="border-2 border-dashed border-outline-variant/30 rounded-xl p-8 flex flex-col items-center justify-center bg-surface-container-low hover:bg-primary-fixed transition-colors">
+          <span class="material-symbols-outlined text-outline text-4xl mb-3">cloud_upload</span>
+          <p class="text-sm font-medium text-on-surface mb-2">Click upload to choose file</p>
+          <input id="fileInput" type="file" class="hidden" />
+          <button id="uploadFileBtn"
+            class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 active:scale-95 transition-all">
+            Upload file
+          </button>
+          <p id="selectedFileName" class="selected-file-name mt-3">Chua chon tep nao</p>
+          <p class="text-xs text-on-surface-variant mt-1">PDF, TXT, CSV, JSON, DOCX, XLSX (Max 50MB)</p>
+        </div>
+      </div>
+
+      <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-secondary">
+            <span class="material-symbols-outlined">link</span>
+          </div>
+          <h3 class="font-manrope font-bold text-on-surface">Crawl URL</h3>
+        </div>
+        <div class="flex gap-2">
+          <input id="urlInput"
+            class="flex-1 bg-surface-container-low border-none rounded-lg px-4 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all"
+            placeholder="https://example.com/docs" type="text" />
+          <button id="ingestUrlBtn"
+            class="bg-secondary-container text-on-secondary-container px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 active:scale-95 transition-all">
+            Fetch
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-tertiary">
+            <span class="material-symbols-outlined">edit_note</span>
+          </div>
+          <h3 class="font-manrope font-bold text-on-surface">Manual Context</h3>
+        </div>
+        <div class="space-y-3">
+          <input id="sourceInput"
+            class="w-full bg-surface-container-low border-none rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all"
+            placeholder="Source Identifier" type="text" />
+          <textarea id="textInput"
+            class="w-full bg-surface-container-low border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all resize-none"
+            placeholder="Paste your raw text here..." rows="4"></textarea>
+        </div>
+        <button id="ingestTextBtn"
+          class="w-full bg-primary text-white py-2.5 rounded-lg text-sm font-bold shadow-sm hover:opacity-90 active:scale-[0.98] transition-all">
+          Save Snippet
+        </button>
+        <pre id="uploadStatus" class="upload-status"></pre>
+      </div>
+    </section>
+
+    <section class="col-span-12 lg:col-span-7 bg-surface relative flex flex-col overflow-hidden">
+      <header class="h-14 px-6 flex items-center justify-between bg-white/40 backdrop-blur-md z-10 shrink-0">
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+            <span class="text-xs font-semibold text-on-surface-variant uppercase tracking-widest">Active Session</span>
+          </div>
+          <div class="h-4 w-[1px] bg-outline-variant"></div>
+          <input id="sessionInput"
+            class="flex items-center gap-1.5 px-2 py-1 bg-surface-container-high rounded text-[11px] font-mono text-on-surface-variant w-44"
+            value="team-a" />
+        </div>
+        <button id="clearChatBtn"
+          class="flex items-center gap-2 text-error text-xs font-bold hover:bg-error-container/20 px-3 py-1.5 rounded-lg transition-colors">
+          <span class="material-symbols-outlined text-sm">delete_sweep</span>
+          Clear Chat
+        </button>
+      </header>
+      <div id="chatBox" class="flex-1 overflow-y-auto p-6 space-y-8 pb-32"></div>
+      <div class="absolute bottom-0 w-full p-6 bg-gradient-to-t from-surface via-surface/95 to-transparent">
+        <div
+          class="max-w-4xl mx-auto relative flex items-end gap-3 bg-surface-container-lowest p-3 rounded-2xl shadow-xl shadow-blue-600/5 ring-1 ring-outline-variant/10">
+          <textarea id="chatInput"
+            class="flex-1 bg-transparent border-none focus:ring-0 text-sm py-2 px-1 max-h-32 resize-none"
+            placeholder="Type your message here..." rows="1"></textarea>
+          <button id="sendBtn"
+            class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-container text-white flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+
+</html>
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Architect AI | Dashboard</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "inverse-on-surface": "#eff1f3",
+            "on-primary": "#ffffff",
+            "surface-container-high": "#e6e8ea",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#00174b",
+            "on-primary-container": "#eeefff",
+            "outline": "#737686",
+            "on-background": "#191c1e",
+            "on-tertiary-container": "#ffede6",
+            "secondary": "#495c95",
+            "surface-dim": "#d8dadc",
+            "surface-tint": "#0053db",
+            "on-secondary-fixed-variant": "#31447b",
+            "on-tertiary": "#ffffff",
+            "tertiary": "#943700",
+            "on-surface": "#191c1e",
+            "tertiary-container": "#bc4800",
+            "on-secondary-container": "#394c84",
+            "on-secondary-fixed": "#00174b",
+            "secondary-fixed-dim": "#b4c5ff",
+            "outline-variant": "#c3c6d7",
+            "background": "#f7f9fb",
+            "inverse-primary": "#b4c5ff",
+            "surface-container": "#eceef0",
+            "surface-variant": "#e0e3e5",
+            "on-secondary": "#ffffff",
+            "on-error-container": "#93000a",
+            "surface": "#f7f9fb",
+            "on-tertiary-fixed": "#360f00",
+            "surface-container-highest": "#e0e3e5",
+            "surface-container-low": "#f2f4f6",
+            "primary-fixed": "#dbe1ff",
+            "tertiary-fixed": "#ffdbcd",
+            "on-primary-fixed-variant": "#003ea8",
+            "tertiary-fixed-dim": "#ffb596",
+            "error-container": "#ffdad6",
+            "on-tertiary-fixed-variant": "#7d2d00",
+            "on-error": "#ffffff",
+            "primary-fixed-dim": "#b4c5ff",
+            "surface-bright": "#f7f9fb",
+            "secondary-fixed": "#dbe1ff",
+            "error": "#ba1a1a",
+            "secondary-container": "#acbfff",
+            "primary": "#004ac6",
+            "on-surface-variant": "#434655",
+            "inverse-surface": "#2d3133",
+            "primary-container": "#2563eb"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          fontFamily: {
+            "headline": ["Manrope"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+
+<body class="bg-background text-on-surface antialiased overflow-hidden">
+  <header
+    class="fixed top-0 w-full flex justify-between items-center px-6 h-16 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl z-50 shadow-sm dark:shadow-none font-manrope antialiased tracking-tight">
+    <div class="flex items-center gap-8">
+      <div class="text-xl font-bold tracking-tighter text-slate-900 dark:text-white">Architect AI</div>
+      <nav class="hidden md:flex gap-6 items-center h-full">
+        <a class="text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400 pb-1 h-full flex items-center mt-1"
+          href="#">Dashboard</a>
+        <a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors h-full flex items-center"
+          href="#">Knowledge Base</a>
+        <a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors h-full flex items-center"
+          href="#">Agents</a>
+        <a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors h-full flex items-center"
+          href="#">Logs</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-4">
+      <div
+        class="flex items-center gap-2 text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-200 p-2 rounded-lg cursor-pointer scale-95 active:scale-90 transition-transform">
+        <span class="material-symbols-outlined" data-icon="settings">settings</span>
+      </div>
+      <div
+        class="flex items-center gap-2 text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-200 p-2 rounded-lg cursor-pointer scale-95 active:scale-90 transition-transform">
+        <span class="material-symbols-outlined" data-icon="help">help</span>
+      </div>
+      <img alt="User profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-surface-container-high"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_QHpthfNBOBluXA65FwJ3j9tv7D7v17Yh0-4oV2vaGbZVvxoapBXVumFdpo-GS6Ypfk_GzhE68vl9M8_HWxVhyIe5xXVngmx68313yMv9hgdZ7oZa4MtL0pBkynGn39r2dyw_CAbDk0z6gCGmwUq27tcrAz7CMWn64rJt7u_T8xRX8hrf4SuVRMM4DpLLvC4VVuumHiofnZ3iZzQVSbAtsgMpMYnBfyCtKaRekAJ5MRDnKrq9XRYQX9rokWG2ePDBdrCGB5o41TmF" />
+    </div>
+  </header>
+  <aside
+    class="fixed left-0 top-16 bottom-0 flex flex-col p-4 w-64 bg-slate-50 dark:bg-slate-950 font-inter text-sm font-medium z-40 bg-slate-100 dark:bg-slate-900">
+    <div class="flex items-center gap-3 mb-8 px-2">
+      <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white">
+        <span class="material-symbols-outlined" data-icon="architecture">architecture</span>
+      </div>
+      <div>
+        <div class="font-manrope font-bold text-slate-900 dark:text-white leading-tight">Project Alpha</div>
+        <div class="text-[10px] text-slate-500 font-normal">V2.4 Stable</div>
+      </div>
+    </div>
+    <div class="space-y-1 mb-8">
+      <a class="flex items-center gap-3 px-3 py-2.5 bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 shadow-sm rounded-lg hover:translate-x-1 transition-transform duration-200 active:opacity-80"
+        href="#">
+        <span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+        <span>Conversations</span>
+      </a>
+    </div>
+    <button
+      class="w-full bg-gradient-to-br from-primary to-primary-container text-white py-3 rounded-xl font-manrope font-bold text-sm shadow-md hover:translate-x-1 transition-transform duration-200 active:opacity-80 mb-auto">
+      Deploy Agent
+    </button>
+    <div class="space-y-1 pt-4 mt-4 border-t border-slate-200 dark:border-slate-800">
+      <a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/30 rounded-lg"
+        href="#">
+        <span class="material-symbols-outlined" data-icon="settings">settings</span>
+        <span>Settings</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/30 rounded-lg"
+        href="#">
+        <span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+        <span>Support</span>
+      </a>
+    </div>
+  </aside>
+  <main class="ml-64 mt-16 h-[calc(100vh-64px)] grid grid-cols-12 overflow-hidden">
+    <section class="col-span-12 lg:col-span-5 border-r-0 bg-surface-container-low p-6 overflow-y-auto space-y-6">
+      <header>
+        <h2 class="text-2xl font-manrope font-extrabold text-on-surface tracking-tight">Data Ingestion</h2>
+        <p class="text-sm text-on-surface-variant">Configure your agent's knowledge sources.</p>
+      </header>
+      <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined" data-icon="upload_file">upload_file</span>
+          </div>
+          <h3 class="font-manrope font-bold text-on-surface">Upload Knowledge</h3>
+        </div>
+        <div
+          class="border-2 border-dashed border-outline-variant/30 rounded-xl p-8 flex flex-col items-center justify-center bg-surface-container-low hover:bg-primary-fixed transition-colors">
+          <input id="fileInput" class="w-full bg-transparent border-none text-sm mb-3" type="file" />
+          <button id="uploadFileBtn"
+            class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 active:scale-95 transition-all">
+            Upload file
+          </button>
+          <p class="text-xs text-on-surface-variant mt-3">PDF, TXT, CSV, JSON (Max 50MB)</p>
+        </div>
+      </div>
+      <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-secondary">
+            <span class="material-symbols-outlined" data-icon="link">link</span>
+          </div>
+          <h3 class="font-manrope font-bold text-on-surface">Crawl URL</h3>
+        </div>
+        <div class="flex gap-2">
+          <input id="urlInput"
+            class="flex-1 bg-surface-container-low border-none rounded-lg px-4 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all"
+            placeholder="https://example.com/docs" type="text" />
+          <button id="ingestUrlBtn"
+            class="bg-secondary-container text-on-secondary-container px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 active:scale-95 transition-all">
+            Fetch
+          </button>
+        </div>
+        <p class="text-[11px] text-on-surface-variant px-1">Recursively crawl subpages up to 3 levels deep.</p>
+      </div>
+      <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-tertiary">
+            <span class="material-symbols-outlined" data-icon="edit_note">edit_note</span>
+          </div>
+          <h3 class="font-manrope font-bold text-on-surface">Manual Context</h3>
+        </div>
+        <div class="space-y-3">
+          <input id="sourceInput"
+            class="w-full bg-surface-container-low border-none rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all"
+            placeholder="Source Identifier (e.g. Legal Rider)" type="text" />
+          <textarea id="textInput"
+            class="w-full bg-surface-container-low border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all resize-none"
+            placeholder="Paste your raw text here..." rows="4"></textarea>
+        </div>
+        <button id="ingestTextBtn"
+          class="w-full bg-primary text-white py-2.5 rounded-lg text-sm font-bold shadow-sm hover:opacity-90 active:scale-[0.98] transition-all">
+          Save Snippet
+        </button>
+        <pre id="uploadStatus" class="upload-status"></pre>
+      </div>
+    </section>
+    <section class="col-span-12 lg:col-span-7 bg-surface relative flex flex-col overflow-hidden">
+      <header class="h-14 px-6 flex items-center justify-between bg-white/40 backdrop-blur-md z-10 shrink-0">
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+            <span class="text-xs font-semibold text-on-surface-variant uppercase tracking-widest">Active Session</span>
+          </div>
+          <div class="h-4 w-[1px] bg-outline-variant"></div>
+          <input id="sessionInput"
+            class="flex items-center gap-1.5 px-2 py-1 bg-surface-container-high rounded text-[11px] font-mono text-on-surface-variant w-44"
+            value="team-a" />
+        </div>
+        <button id="clearChatBtn"
+          class="flex items-center gap-2 text-error text-xs font-bold hover:bg-error-container/20 px-3 py-1.5 rounded-lg transition-colors">
+          <span class="material-symbols-outlined text-sm" data-icon="delete_sweep">delete_sweep</span>
+          Clear Chat
+        </button>
+      </header>
+      <div id="chatBox" class="flex-1 overflow-y-auto p-6 space-y-8 pb-32"></div>
+      <div class="absolute bottom-0 w-full p-6 bg-gradient-to-t from-surface via-surface/95 to-transparent">
+        <div
+          class="max-w-4xl mx-auto relative flex items-end gap-3 bg-surface-container-lowest p-3 rounded-2xl shadow-xl shadow-blue-600/5 ring-1 ring-outline-variant/10">
+          <button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-colors">
+            <span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+          </button>
+          <textarea id="chatInput"
+            class="flex-1 bg-transparent border-none focus:ring-0 text-sm py-2 px-1 max-h-32 resize-none"
+            placeholder="Type your message here..." rows="1"></textarea>
+          <button id="sendBtn"
+            class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-container text-white flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all">
+            <span class="material-symbols-outlined" data-icon="send"
+              style="font-variation-settings: 'FILL' 1;">send</span>
+          </button>
+        </div>
+        <p
+          class="text-center text-[10px] text-on-surface-variant mt-3 font-medium uppercase tracking-widest opacity-60">
+          AI can make mistakes. Verify critical info.
+        </p>
+      </div>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+
+</html>
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Architect AI | Dashboard</title>
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap"
+    rel="stylesheet" />
+  <!-- Icons -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "inverse-on-surface": "#eff1f3",
+            "on-primary": "#ffffff",
+            "surface-container-high": "#e6e8ea",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#00174b",
+            "on-primary-container": "#eeefff",
+            "outline": "#737686",
+            "on-background": "#191c1e",
+            "on-tertiary-container": "#ffede6",
+            "secondary": "#495c95",
+            "surface-dim": "#d8dadc",
+            "surface-tint": "#0053db",
+            "on-secondary-fixed-variant": "#31447b",
+            "on-tertiary": "#ffffff",
+            "tertiary": "#943700",
+            "on-surface": "#191c1e",
+            "tertiary-container": "#bc4800",
+            "on-secondary-container": "#394c84",
+            "on-secondary-fixed": "#00174b",
+            "secondary-fixed-dim": "#b4c5ff",
+            "outline-variant": "#c3c6d7",
+            "background": "#f7f9fb",
+            "inverse-primary": "#b4c5ff",
+            "surface-container": "#eceef0",
+            "surface-variant": "#e0e3e5",
+            "on-secondary": "#ffffff",
+            "on-error-container": "#93000a",
+            "surface": "#f7f9fb",
+            "on-tertiary-fixed": "#360f00",
+            "surface-container-highest": "#e0e3e5",
+            "surface-container-low": "#f2f4f6",
+            "primary-fixed": "#dbe1ff",
+            "tertiary-fixed": "#ffdbcd",
+            "on-primary-fixed-variant": "#003ea8",
+            "tertiary-fixed-dim": "#ffb596",
+            "error-container": "#ffdad6",
+            "on-tertiary-fixed-variant": "#7d2d00",
+            "on-error": "#ffffff",
+            "primary-fixed-dim": "#b4c5ff",
+            "surface-bright": "#f7f9fb",
+            "secondary-fixed": "#dbe1ff",
+            "error": "#ba1a1a",
+            "secondary-container": "#acbfff",
+            "primary": "#004ac6",
+            "on-surface-variant": "#434655",
+            "inverse-surface": "#2d3133",
+            "primary-container": "#2563eb"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "headline": ["Manrope"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      line-height: 1;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .font-manrope {
+      font-family: 'Manrope', sans-serif;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #e0e3e5;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #c3c6d7;
+    }
+  </style>
+</head>
+
+<body class="bg-background text-on-surface antialiased overflow-hidden">
+  <!-- TopNavBar -->
+  <header
+    class="fixed top-0 w-full flex justify-between items-center px-6 h-16 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl z-50 shadow-sm dark:shadow-none font-manrope antialiased tracking-tight">
+    <div class="flex items-center gap-8">
+      <div class="text-xl font-bold tracking-tighter text-slate-900 dark:text-white">Architect AI</div>
+      <nav class="hidden md:flex gap-6 items-center h-full">
+        <a class="text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400 pb-1 h-full flex items-center mt-1"
+          href="#">Dashboard</a>
+        <a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors h-full flex items-center"
+          href="#">Knowledge Base</a>
+        <a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors h-full flex items-center"
+          href="#">Agents</a>
+        <a class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors h-full flex items-center"
+          href="#">Logs</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-4">
+      <div
+        class="flex items-center gap-2 text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-200 p-2 rounded-lg cursor-pointer scale-95 active:scale-90 transition-transform">
+        <span class="material-symbols-outlined" data-icon="settings">settings</span>
+      </div>
+      <div
+        class="flex items-center gap-2 text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-200 p-2 rounded-lg cursor-pointer scale-95 active:scale-90 transition-transform">
+        <span class="material-symbols-outlined" data-icon="help">help</span>
+      </div>
+      <img alt="User profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-surface-container-high"
+        data-alt="Professional headshot of a software architect in a minimalist studio setting with soft natural lighting"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_QHpthfNBOBluXA65FwJ3j9tv7D7v17Yh0-4oV2vaGbZVvxoapBXVumFdpo-GS6Ypfk_GzhE68vl9M8_HWxVhyIe5xXVngmx68313yMv9hgdZ7oZa4MtL0pBkynGn39r2dyw_CAbDk0z6gCGmwUq27tcrAz7CMWn64rJt7u_T8xRX8hrf4SuVRMM4DpLLvC4VVuumHiofnZ3iZzQVSbAtsgMpMYnBfyCtKaRekAJ5MRDnKrq9XRYQX9rokWG2ePDBdrCGB5o41TmF" />
+    </div>
+  </header>
+  <!-- SideNavBar -->
+  <aside
+    class="fixed left-0 top-16 bottom-0 flex flex-col p-4 w-64 bg-slate-50 dark:bg-slate-950 font-inter text-sm font-medium z-40 bg-slate-100 dark:bg-slate-900">
+    <div class="flex items-center gap-3 mb-8 px-2">
+      <div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white">
+        <span class="material-symbols-outlined" data-icon="architecture">architecture</span>
+      </div>
+      <div>
+        <div class="font-manrope font-bold text-slate-900 dark:text-white leading-tight">Project Alpha</div>
+        <div class="text-[10px] text-slate-500 font-normal">V2.4 Stable</div>
+      </div>
+    </div>
+    <div class="space-y-1 mb-8">
+      <a class="flex items-center gap-3 px-3 py-2.5 bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 shadow-sm rounded-lg hover:translate-x-1 transition-transform duration-200 active:opacity-80"
+        href="#">
+        <span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+        <span>Conversations</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/30 rounded-lg hover:translate-x-1 transition-transform duration-200 active:opacity-80"
+        href="#">
+        <span class="material-symbols-outlined" data-icon="database">database</span>
+        <span>Data Sources</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/30 rounded-lg hover:translate-x-1 transition-transform duration-200 active:opacity-80"
+        href="#">
+        <span class="material-symbols-outlined" data-icon="extension">extension</span>
+        <span>Connectors</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/30 rounded-lg hover:translate-x-1 transition-transform duration-200 active:opacity-80"
+        href="#">
+        <span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+        <span>Fine-tuning</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/30 rounded-lg hover:translate-x-1 transition-transform duration-200 active:opacity-80"
+        href="#">
+        <span class="material-symbols-outlined" data-icon="key">key</span>
+        <span>API Keys</span>
+      </a>
+    </div>
+    <button
+      class="w-full bg-gradient-to-br from-primary to-primary-container text-white py-3 rounded-xl font-manrope font-bold text-sm shadow-md hover:translate-x-1 transition-transform duration-200 active:opacity-80 mb-auto">
+      Deploy Agent
+    </button>
+    <div class="space-y-1 pt-4 mt-4 border-t border-slate-200 dark:border-slate-800">
+      <a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/30 rounded-lg"
+        href="#">
+        <span class="material-symbols-outlined" data-icon="settings">settings</span>
+        <span>Settings</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/30 rounded-lg"
+        href="#">
+        <span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+        <span>Support</span>
+      </a>
+    </div>
+  </aside>
+  <!-- Main Workspace -->
+  <main class="ml-64 mt-16 h-[calc(100vh-64px)] grid grid-cols-12 overflow-hidden">
+    <!-- Left Section: Data Ingestion -->
+    <section class="col-span-12 lg:col-span-5 border-r-0 bg-surface-container-low p-6 overflow-y-auto space-y-6">
+      <header>
+        <h2 class="text-2xl font-manrope font-extrabold text-on-surface tracking-tight">Data Ingestion</h2>
+        <p class="text-sm text-on-surface-variant">Configure your agent's knowledge sources.</p>
+      </header>
+      <!-- Upload File -->
+      <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined" data-icon="upload_file">upload_file</span>
+          </div>
+          <h3 class="font-manrope font-bold text-on-surface">Upload Knowledge</h3>
+        </div>
+        <div
+          class="border-2 border-dashed border-outline-variant/30 rounded-xl p-8 flex flex-col items-center justify-center bg-surface-container-low hover:bg-primary-fixed transition-colors cursor-pointer group">
+          <span class="material-symbols-outlined text-outline text-4xl mb-3 group-hover:text-primary"
+            data-icon="cloud_upload">cloud_upload</span>
+          <p class="text-sm font-medium text-on-surface">Drag and drop files here</p>
+          <p class="text-xs text-on-surface-variant mt-1">PDF, TXT, CSV, JSON (Max 50MB)</p>
+        </div>
+      </div>
+      <!-- Ingest URL -->
+      <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-secondary">
+            <span class="material-symbols-outlined" data-icon="link">link</span>
+          </div>
+          <h3 class="font-manrope font-bold text-on-surface">Crawl URL</h3>
+        </div>
+        <div class="flex gap-2">
+          <input
+            class="flex-1 bg-surface-container-low border-none rounded-lg px-4 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all"
+            placeholder="https://example.com/docs" type="text" />
+          <button
+            class="bg-secondary-container text-on-secondary-container px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 active:scale-95 transition-all">
+            Fetch
+          </button>
+        </div>
+        <p class="text-[11px] text-on-surface-variant px-1">Recursively crawl subpages up to 3 levels deep.</p>
+      </div>
+      <!-- Ingest Text -->
+      <div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-tertiary">
+            <span class="material-symbols-outlined" data-icon="edit_note">edit_note</span>
+          </div>
+          <h3 class="font-manrope font-bold text-on-surface">Manual Context</h3>
+        </div>
+        <div class="space-y-3">
+          <input
+            class="w-full bg-surface-container-low border-none rounded-lg px-4 py-2 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all"
+            placeholder="Source Identifier (e.g. Legal Rider)" type="text" />
+          <textarea
+            class="w-full bg-surface-container-low border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all resize-none"
+            placeholder="Paste your raw text here..." rows="4"></textarea>
+        </div>
+        <button
+          class="w-full bg-primary text-white py-2.5 rounded-lg text-sm font-bold shadow-sm hover:opacity-90 active:scale-[0.98] transition-all">
+          Save Snippet
+        </button>
+      </div>
+    </section>
+    <!-- Right Section: Chat Interface -->
+    <section class="col-span-12 lg:col-span-7 bg-surface relative flex flex-col overflow-hidden">
+      <!-- Chat Header -->
+      <header class="h-14 px-6 flex items-center justify-between bg-white/40 backdrop-blur-md z-10 shrink-0">
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+            <span class="text-xs font-semibold text-on-surface-variant uppercase tracking-widest">Active Session</span>
+          </div>
+          <div class="h-4 w-[1px] bg-outline-variant"></div>
+          <div
+            class="flex items-center gap-1.5 px-2 py-1 bg-surface-container-high rounded text-[11px] font-mono text-on-surface-variant">
+            <span>ID:</span>
+            <span class="font-bold">#ARC-789-22X</span>
           </div>
         </div>
-        <pre id="uploadStatus" class="status"></pre>
-      </section>
-
-      <section class="card">
-        <h2>2) Chat voi Agent</h2>
-        <div class="chat-controls">
-          <input id="sessionInput" type="text" value="team-a" />
+        <button
+          class="flex items-center gap-2 text-error text-xs font-bold hover:bg-error-container/20 px-3 py-1.5 rounded-lg transition-colors">
+          <span class="material-symbols-outlined text-sm" data-icon="delete_sweep">delete_sweep</span>
+          Clear Chat
+        </button>
+      </header>
+      <!-- Message Area -->
+      <div class="flex-1 overflow-y-auto p-6 space-y-8 pb-32">
+        <!-- AI Message -->
+        <div class="flex flex-col items-start max-w-[85%]">
+          <div class="flex items-center gap-2 mb-2 ml-4">
+            <div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-[10px] text-white">
+              <span class="material-symbols-outlined text-[14px]" data-icon="smart_toy"
+                style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+            </div>
+            <span class="text-[11px] font-bold text-on-surface-variant">Architect Assistant</span>
+          </div>
+          <div
+            class="bg-surface-container-lowest text-on-surface p-5 rounded-xl shadow-sm font-body text-sm leading-relaxed">
+            Hello! I've initialized the Project Alpha environment. I have access to your last 3 uploaded PDFs and the
+            documentation at architecture.ai/docs. How can I assist you with your agent configuration today?
+          </div>
         </div>
-        <div id="chatBox" class="chat-box"></div>
-        <div class="chat-input-row">
-          <textarea id="chatInput" rows="3" placeholder="Nhap cau hoi..."></textarea>
-          <button id="sendBtn">Gui</button>
+        <!-- User Message -->
+        <div class="flex flex-col items-end max-w-[85%] ml-auto">
+          <div class="flex items-center gap-2 mb-2 mr-4">
+            <span class="text-[11px] font-bold text-on-surface-variant">You</span>
+            <img alt="User" class="w-6 h-6 rounded-full object-cover ring-1 ring-outline-variant"
+              data-alt="Small profile thumbnail of a user"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZkHJZpwYWpJBE8Rvj1oJSxwNWFC3PCgEqnYdsMWM5VBYtHZC97e_uUwKHFH9wD-Hjy8oa4xJCxPPLlyddimxIjjtE5E0ujd1Wzxd5E188GPOxnOZV-c2HJJHUGua3MNGRHc4K2btut4dY_Ez4cAdp68ubOg8eMrOOf0_YZnWtlUpwlsnEf8mreClmSdIHcBdYJ3v5RB1tTdOb5o6QZw4w8gxnoc-suBP2qsdfc34y9mTNr6F5F1dnJUHk7pc_Ln1mn9NYKb69R4J0" />
+          </div>
+          <div class="bg-surface-container-highest text-on-surface p-5 rounded-xl font-body text-sm leading-relaxed">
+            Can you summarize the core constraints defined in the "Security-Rider.pdf" we just ingested? Focus on API
+            rate limiting and auth protocols.
+          </div>
         </div>
-      </section>
-    </main>
+        <!-- AI Message -->
+        <div class="flex flex-col items-start max-w-[85%]">
+          <div class="flex items-center gap-2 mb-2 ml-4">
+            <div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center text-[10px] text-white">
+              <span class="material-symbols-outlined text-[14px]" data-icon="smart_toy"
+                style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+            </div>
+            <span class="text-[11px] font-bold text-on-surface-variant">Architect Assistant</span>
+          </div>
+          <div
+            class="bg-surface-container-lowest text-on-surface p-5 rounded-xl shadow-sm font-body text-sm leading-relaxed space-y-3">
+            <p>Based on the **Security-Rider.pdf**, here are the key technical constraints:</p>
+            <ul class="list-disc pl-5 space-y-1">
+              <li><strong>Rate Limiting:</strong> Tier 1 agents are capped at 50 requests/min. Excess requests must
+                return a 429 status code with a 'Retry-After' header.</li>
+              <li><strong>Auth Protocols:</strong> Mandatory OAuth 2.0 using JWTs. Tokens must be rotated every 3600
+                seconds.</li>
+              <li><strong>Data Sovereignty:</strong> All PII processing must remain within the EU-West-1 region.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Input Bar -->
+      <div class="absolute bottom-0 w-full p-6 bg-gradient-to-t from-surface via-surface/95 to-transparent">
+        <div
+          class="max-w-4xl mx-auto relative flex items-end gap-3 bg-surface-container-lowest p-3 rounded-2xl shadow-xl shadow-blue-600/5 ring-1 ring-outline-variant/10">
+          <button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-xl transition-colors">
+            <span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+          </button>
+          <textarea class="flex-1 bg-transparent border-none focus:ring-0 text-sm py-2 px-1 max-h-32 resize-none"
+            placeholder="Type your message here..." rows="1"></textarea>
+          <button
+            class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-container text-white flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all">
+            <span class="material-symbols-outlined" data-icon="send"
+              style="font-variation-settings: 'FILL' 1;">send</span>
+          </button>
+        </div>
+        <p
+          class="text-center text-[10px] text-on-surface-variant mt-3 font-medium uppercase tracking-widest opacity-60">
+          AI can make mistakes. Verify critical info.
+        </p>
+      </div>
+    </section>
+  </main>
+</body>
 
-    <script src="/static/app.js"></script>
-  </body>
 </html>

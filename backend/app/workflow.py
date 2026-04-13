@@ -48,7 +48,7 @@ class ChatbotAgent:
         system_content = self.system_prompt
         if context_text:
             system_content += (
-                "\n\nSu dung boi canh sau neu lien quan. Neu khong du thong tin, noi ro han che:\n"
+                "\n\nSử dụng bối cảnh sau nếu liên quan. Nếu không đủ thông tin, nêu rõ hạn chế:\n"
                 f"{context_text}"
             )
 
@@ -66,7 +66,7 @@ class ChatbotAgent:
         messages = self._build_messages(session_id, user_message, chunks)
         answer = self.llm.chat(messages).strip()
         if not answer:
-            answer = "Minh chua tao duoc cau tra loi phu hop. Ban thu dat cau hoi cu the hon nhe."
+            answer = "Mình chưa tạo được câu trả lời phù hợp. Bạn thử đặt câu hỏi cụ thể hơn nhé."
 
         self.memory.add_assistant_message(session_id, answer)
         return AgentResult(answer=answer, source=source)

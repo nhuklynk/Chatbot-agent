@@ -2,8 +2,8 @@ from pydantic import BaseModel, Field
 
 
 class ChatRequest(BaseModel):
-    session_id: str = Field(..., description="ID de luu memory theo nguoi dung")
-    message: str = Field(..., min_length=1, description="Tin nhan cua nguoi dung")
+    session_id: str = Field(..., description="ID để lưu bộ nhớ theo người dùng")
+    message: str = Field(..., min_length=1, description="Tin nhắn của người dùng")
 
 
 class ChatResponse(BaseModel):
@@ -13,7 +13,7 @@ class ChatResponse(BaseModel):
 
 
 class IngestUrlRequest(BaseModel):
-    url: str = Field(..., description="URL can nap vao knowledge base")
+    url: str = Field(..., description="URL cần nạp vào kho tri thức")
 
 
 class IngestUrlResponse(BaseModel):
@@ -22,5 +22,21 @@ class IngestUrlResponse(BaseModel):
 
 
 class IngestTextRequest(BaseModel):
-    text: str = Field(..., min_length=1, description="Noi dung van ban can nap")
-    source: str = Field(default="manual_input", description="Nguon du lieu tu dat ten")
+    text: str = Field(..., min_length=1, description="Nội dung văn bản cần nạp")
+    source: str = Field(default="manual_input", description="Nguồn dữ liệu tự đặt tên")
+
+
+class KnowledgeSourceItem(BaseModel):
+    source: str
+    display_name: str
+    source_type: str
+    chunk_count: int
+
+
+class KnowledgeSourcesResponse(BaseModel):
+    items: list[KnowledgeSourceItem]
+
+
+class DeleteKnowledgeSourceResponse(BaseModel):
+    message: str
+    removed_chunks: int

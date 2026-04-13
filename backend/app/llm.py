@@ -23,8 +23,8 @@ class LLMClient:
         if not self.client:
             provider_hint = "GEMINI_API_KEY" if self.provider == "gemini" else "OPENAI_API_KEY"
             return (
-                f"He thong dang chay che do fallback vi chua co API key ({provider_hint}). "
-                "Hay them API key de co cau tra loi thong minh hon."
+                f"Hệ thống đang chạy chế độ fallback vì chưa có API key ({provider_hint}). "
+                "Hãy thêm API key để có câu trả lời thông minh hơn."
             )
         response = self.client.chat.completions.create(
             model=self.model,

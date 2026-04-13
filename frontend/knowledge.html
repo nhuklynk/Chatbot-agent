@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Kho tri thức</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased overflow-hidden">
+    <header class="fixed top-0 w-full flex justify-between items-center px-6 h-16 bg-white/90 backdrop-blur z-50 shadow-sm font-manrope">
+      <div class="text-xl font-bold">Kiến trúc AI</div>
+      <a class="text-sm text-blue-700 font-semibold" href="/chat">Đi đến Hội thoại</a>
+    </header>
+
+    <aside class="fixed left-0 top-16 bottom-0 flex flex-col p-4 w-64 bg-slate-100 text-sm font-medium z-40">
+      <div class="flex items-center gap-3 mb-8 px-2">
+        <div class="w-10 h-10 rounded-xl bg-blue-700 flex items-center justify-center text-white">
+          <span class="material-symbols-outlined">architecture</span>
+        </div>
+        <div>
+          <div class="font-manrope font-bold leading-tight">Dự án Alpha</div>
+          <div class="text-[10px] text-slate-500 font-normal">Phiên bản 2.4</div>
+        </div>
+      </div>
+      <div class="space-y-1 mb-8">
+        <a class="flex items-center gap-3 px-3 py-2.5 text-slate-500 hover:bg-slate-200/50 rounded-lg" href="/chat">
+          <span class="material-symbols-outlined">chat_bubble</span><span>Hội thoại</span>
+        </a>
+        <a class="flex items-center gap-3 px-3 py-2.5 bg-white text-blue-600 shadow-sm rounded-lg" href="/">
+          <span class="material-symbols-outlined">database</span><span>Kho tri thức</span>
+        </a>
+      </div>
+    </aside>
+
+    <main class="ml-64 mt-16 h-[calc(100vh-64px)] overflow-y-auto p-6">
+      <section class="w-full max-w-none space-y-6">
+        <header>
+          <h2 class="text-2xl font-manrope font-extrabold">Kho tri thức</h2>
+          <p class="text-sm text-slate-500">Tải lên và quản lý nguồn dữ liệu của bạn.</p>
+        </header>
+
+        <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700"><span class="material-symbols-outlined">upload_file</span></div>
+            <h3 class="font-manrope font-bold">Tải tài liệu</h3>
+          </div>
+          <div class="border-2 border-dashed border-slate-300 rounded-xl p-8 flex flex-col items-center justify-center">
+            <span class="material-symbols-outlined text-slate-400 text-4xl mb-3">cloud_upload</span>
+            <p class="text-sm font-medium mb-2">Bấm tải lên để chọn tệp</p>
+            <input id="fileInput" type="file" class="hidden" />
+            <button id="uploadFileBtn" class="bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold">Tải tệp lên</button>
+            <p id="selectedFileName" class="selected-file-name mt-3">Chưa chọn tệp nào</p>
+            <p class="text-xs text-slate-500 mt-1">PDF, TXT, CSV, JSON, DOCX, XLSX (tối đa 50MB)</p>
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700"><span class="material-symbols-outlined">link</span></div>
+            <h3 class="font-manrope font-bold">Nạp URL</h3>
+          </div>
+          <div class="flex gap-2">
+            <input id="urlInput" class="flex-1 bg-slate-100 border-none rounded-lg px-4 text-sm" placeholder="https://example.com/docs" type="text" />
+            <button id="ingestUrlBtn" class="bg-indigo-200 text-indigo-900 px-4 py-2 rounded-lg text-sm font-semibold">Nạp</button>
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-700"><span class="material-symbols-outlined">edit_note</span></div>
+            <h3 class="font-manrope font-bold">Nhập ngữ cảnh thủ công</h3>
+          </div>
+          <div class="space-y-3">
+            <input id="sourceInput" class="w-full bg-slate-100 border-none rounded-lg px-4 py-2 text-sm" placeholder="Tên nguồn dữ liệu" type="text" />
+            <textarea id="textInput" class="w-full bg-slate-100 border-none rounded-xl px-4 py-3 text-sm resize-none" placeholder="Dán nội dung văn bản vào đây..." rows="4"></textarea>
+          </div>
+          <button id="ingestTextBtn" class="w-full bg-blue-700 text-white py-2.5 rounded-lg text-sm font-bold">Lưu đoạn văn bản</button>
+          <pre id="uploadStatus" class="upload-status"></pre>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-manrope font-bold">Dữ liệu đã tải lên</h3>
+            <button id="refreshSourcesBtn" class="text-xs text-blue-700 font-semibold">Làm mới</button>
+          </div>
+          <p id="knowledgeSourcesEmpty" class="text-sm text-slate-500">Chưa có dữ liệu nào được nạp.</p>
+          <ul id="knowledgeSourcesList" class="space-y-2"></ul>
+        </div>
+      </section>
+    </main>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
