@@ -87,6 +87,11 @@ def chat_page() -> FileResponse:
     return FileResponse(FRONTEND_CHAT_ENTRY)
 
 
+@app.get("/knowledge")
+def knowledge_page() -> FileResponse:
+    return FileResponse(FRONTEND_KNOWLEDGE_ENTRY)
+
+
 @app.get("/knowledge-sources", response_model=KnowledgeSourcesResponse)
 def knowledge_sources() -> KnowledgeSourcesResponse:
     source_counts = Counter(kb.sources)
