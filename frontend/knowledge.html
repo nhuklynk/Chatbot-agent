@@ -49,9 +49,13 @@
           </div>
           <div class="border-2 border-dashed border-slate-300 rounded-xl p-8 flex flex-col items-center justify-center">
             <span class="material-symbols-outlined text-slate-400 text-4xl mb-3">cloud_upload</span>
-            <p class="text-sm font-medium mb-2">Bấm tải lên để chọn tệp</p>
-            <input id="fileInput" type="file" class="hidden" />
+            <p class="text-sm font-medium mb-2">Bấm tải lên để chọn một hoặc nhiều tệp</p>
+            <input id="fileInput" type="file" class="hidden" multiple />
             <button id="uploadFileBtn" class="bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold">Tải tệp lên</button>
+            <div id="uploadLoading" class="upload-loading hidden mt-3" aria-live="polite">
+              <span class="upload-spinner" aria-hidden="true"></span>
+              <span id="uploadLoadingText">Đang tải tệp...</span>
+            </div>
             <p id="selectedFileName" class="selected-file-name mt-3">Chưa chọn tệp nào</p>
             <p class="text-xs text-slate-500 mt-1">PDF, TXT, CSV, JSON, DOCX, XLSX (tối đa 50MB)</p>
           </div>
@@ -78,7 +82,6 @@
             <textarea id="textInput" class="w-full bg-slate-100 border-none rounded-xl px-4 py-3 text-sm resize-none" placeholder="Dán nội dung văn bản vào đây..." rows="4"></textarea>
           </div>
           <button id="ingestTextBtn" class="w-full bg-blue-700 text-white py-2.5 rounded-lg text-sm font-bold">Lưu đoạn văn bản</button>
-          <pre id="uploadStatus" class="upload-status"></pre>
         </div>
 
         <div class="bg-white p-6 rounded-xl shadow-sm space-y-4">

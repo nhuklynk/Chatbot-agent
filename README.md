@@ -29,6 +29,17 @@ GEMINI_API_KEY=your_gemini_key
 GEMINI_MODEL=gemini-2.5-flash
 ```
 
+Neu muon luu knowledge base len Cloudflare R2, them cac bien:
+
+```env
+STORAGE_PROVIDER=r2
+R2_ACCOUNT_ID=your_account_id
+R2_ACCESS_KEY_ID=your_r2_access_key
+R2_SECRET_ACCESS_KEY=your_r2_secret_key
+R2_BUCKET=your_bucket_name
+R2_OBJECT_KEY=knowledge_base.json
+```
+
 Ghi chu:
 - He thong chi dung Gemini, khong con phan cau hinh OpenAI/provider.
 - Neu khong co key, he thong van chay fallback mode de demo workflow.
@@ -71,7 +82,9 @@ Hoac upload file bang `POST /ingest-file`:
 - Form-data key: `file`
 - Ho tro: `.txt`, `.md`, `.csv`, `.json`, `.pdf`, `.doc`, `.docx`, `.xls`, `.xlsx`
 - File upload duoc chuan hoa qua `kreuzberg` truoc khi dua vao knowledge base
-- Knowledge base duoc luu xuong `data/knowledge_base.json` de giu du lieu qua restart server
+- Knowledge base duoc luu theo `STORAGE_PROVIDER`:
+  - `local`: luu xuong `data/knowledge_base.json`
+  - `r2`: luu vao object `R2_OBJECT_KEY` trong bucket Cloudflare R2
 
 ### Buoc B - Chat voi agent
 Goi API `POST /chat`:

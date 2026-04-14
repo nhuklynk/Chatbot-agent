@@ -1,5 +1,6 @@
 from pathlib import Path
 from collections import Counter
+import logging
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import FileResponse
@@ -27,6 +28,8 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = PROJECT_ROOT / "data"
 KB_STORE_FILE = DATA_DIR / "knowledge_base.json"
 settings = get_settings()
+logger = logging.getLogger(__name__)
+R2_CONFIG = settings.get_r2_config()
 
 llm = LLMClient(
     model=settings.gemini_model,
@@ -45,7 +48,12 @@ agent = ChatbotAgent(
 
 
 def _load_kb_from_disk() -> None:
-    items = load_knowledge_base(KB_STORE_FILE)
+    try:
+        items = load_knowledge_base(KB_STORE_FILE, r2_config=R2_CONFIG)
+    except Exception:
+        logger.exception("Không thể tải knowledge base từ storage đã cấu hình.")
+        return
+
     if not items:
         return
     source_to_chunks: dict[str, list[str]] = {}
@@ -56,7 +64,12 @@ def _load_kb_from_disk() -> None:
 
 
 def _save_kb_to_disk() -> None:
-    save_knowledge_base(KB_STORE_FILE, docs=kb.docs, sources=kb.sources)
+    save_knowledge_base(
+        KB_STORE_FILE,
+        docs=kb.docs,
+        sources=kb.sources,
+        r2_config=R2_CONFIG,
+    )
 
 
 _load_kb_from_disk()
